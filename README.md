@@ -86,11 +86,11 @@ national-ai-policy-assistant/
 │
 ├── Backend/
 │   ├── main.py               # FastAPI app, lifespan, CORS, routes
-│   ├── utils.py              # RAG chain: PDF load → embed → retrieve → generate
+│   ├── original_utils.py              # RAG chain: PDF load → embed → retrieve → generate
 │   └── NationalAIPolicy.pdf  # 📄 Policy document (add manually — not tracked by git)
 │
 ├── Frontend/
-│   └── index.html            # Single-page chat UI
+│   └── original_index.html            # Single-page chat UI
 │
 ├── .env                      # 🔒 Secret keys (never commit — in .gitignore)
 ├── .env.example              # ✅ Safe template to share
@@ -117,7 +117,7 @@ national-ai-policy-assistant/
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/national-ai-policy-assistant.git
+git clone https://github.com/zakir-maswani/national-ai-policy-assistant.git
 cd national-ai-policy-assistant
 ```
 
@@ -288,7 +288,7 @@ Please make sure your code is clean and tested before submitting.
 
 ## 📄 License
 
-This project is licensed under the **MIT License** — see the [LICENSE](LICENSE) file for details.
+This project is licensed under the **Apache License** — see the [LICENSE](LICENSE) file for details.
 
 ---
 
