@@ -2,24 +2,20 @@
 
 # 🇵🇰 Pakistan National AI Policy Assistant
 
-**An intelligent RAG-powered chatbot for exploring Pakistan's National AI Policy 2026**
+**An intelligent RAG-powered chatbot for exploring Pakistan's National AI Policy 2025**
 
 [![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://python.org)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.110%2B-009688?style=for-the-badge&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com)
 [![LangChain](https://img.shields.io/badge/LangChain-0.2%2B-1C3C3C?style=for-the-badge&logo=langchain&logoColor=white)](https://langchain.com)
 [![Groq](https://img.shields.io/badge/Groq-LLaMA%203.1-F55036?style=for-the-badge&logo=groq&logoColor=white)](https://groq.com)
 [![FAISS](https://img.shields.io/badge/FAISS-Vector%20Store-0467DF?style=for-the-badge&logo=meta&logoColor=white)](https://faiss.ai)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](LICENSE)
+[![License: MIT](https://img.shields.io/badge/License-Apache-yellow.svg?style=for-the-badge)](LICENSE)
 
 <br/>
 
-> Ask natural language questions about Pakistan's National AI Policy 2026 and get accurate, context-aware answers — powered by Retrieval-Augmented Generation (RAG).
+> Ask natural language questions about Pakistan's National AI Policy 2025 and get accurate, context-aware answers — powered by Retrieval-Augmented Generation (RAG).
 
 <br/>
-
-![Interface Preview](https://placehold.co/900x480/0b0f0e/e5e921?text=Pakistan+AI+Policy+Assistant&font=montserrat)
-
-*↑ Replace this placeholder with an actual screenshot of the app*
 
 </div>
 
@@ -66,17 +62,17 @@ User Query
         ▲                  JSON Response                │
         │                                               ▼
         │                                   ┌──────────────────────────┐
-        │                                   │  RAG Chain (utils.py)    │
-        │                                   │                          │
-        │                                   │  1. PyPDFLoader          │
-        │                                   │     └─ Load PDF          │
-        │                                   │  2. RecursiveTextSplitter│
-        │                                   │     └─ Chunk (1000/200)  │
-        │                                   │  3. HuggingFace Embeds   │
-        │                                   │     └─ all-MiniLM-L6-v2  │
-        │                                   │  4. FAISS VectorStore    │
-        │                                   │     └─ Top-k=3 Retrieval │
-        │                                   │  5. ChatGroq (LLaMA 3.1) │
+        │                                   │  RAG Chain (utils.py)        │
+        │                                   │                              │
+        │                                   │  1. PyPDFLoader              │
+        │                                   │     └─ Load PDF              │
+        │                                   │  2. RecursiveTextSplitter.   │
+        │                                   │     └─ Chunk (1000/200)      │
+        │                                   │  3. HuggingFace Embeds       │
+        │                                   │     └─ all-MiniLM-L6-v2      │
+        │                                   │  4. FAISS VectorStore        │
+        │                                   │     └─ Top-k=3 Retrieval     │
+        │                                   │  5. ChatGroq (LLaMA 3.1)     │
         └───────────────────────────────────│     └─ Generate Answer   │
                                             └──────────────────────────┘
 ```
