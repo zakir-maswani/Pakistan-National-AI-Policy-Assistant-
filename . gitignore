@@ -1,0 +1,68 @@
+# ─────────────────────────────────────────────
+# Pakistan National AI Policy Assistant
+# .gitignore
+# ─────────────────────────────────────────────
+
+# ── Environment & Secrets ──────────────────────
+.env
+.env.*
+!.env.example
+
+# ── Python ─────────────────────────────────────
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+*.pyd
+*.so
+
+# Virtual Environments
+venv/
+.venv/
+env/
+.env/
+ENV/
+
+# Distribution / Packaging
+dist/
+build/
+*.egg-info/
+*.egg
+.eggs/
+
+# ── AI / ML Artifacts ──────────────────────────
+# FAISS vector store index (rebuild from PDF)
+faiss_index/
+*.faiss
+*.pkl
+
+# HuggingFace model cache
+.cache/
+~/.cache/huggingface/
+
+# ── PDF / Data Files ───────────────────────────
+# Keep your policy PDF out of the repo if large
+# Comment this out if you want to include it
+*.pdf
+
+# ── IDE & Editor ───────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# ── Logs & Temp ────────────────────────────────
+*.log
+*.tmp
+*.bak
+logs/
+
+# ── Testing ────────────────────────────────────
+.pytest_cache/
+.coverage
+htmlcov/
+
+# ── Node (if any frontend tooling added later) ─
+node_modules/
