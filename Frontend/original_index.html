@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pakistan National AI Policy Assistant</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    
+    <style>
+        /* CSS Variables */
+        :root {
+            --bg-dark: #0b0f0e;
+            --sidebar-bg: #121a19;
+            --pak-green: #1a4d3e;
+            --accent-green: #e5e921;
+            --text-main: #e0e0e0;
+            --text-dim: #8e9593;
+            --border: rgba(255, 255, 255, 0.1);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
+        body { background: var(--bg-dark); color: var(--text-main); height: 100vh; display: flex; overflow: hidden; }
+
+        /* --- Sidebar --- */
+        .sidebar {
+            width: 280px;
+            min-width: 200px;
+            max-width: 500px;
+            background: var(--sidebar-bg);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .sidebar-header { 
+            height: 76px; 
+            display: flex; 
+            align-items: center; 
+            gap: 12px; 
+            padding: 0 24px;
+            border-bottom: 1px solid var(--border);
+            flex-shrink: 0;
+        }
+        
+        .logo-box { font-size: 24px; background: var(--pak-green); padding: 4px; border-radius: 6px; }
+        .sidebar-header h1 { font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase; line-height: 1.7; }
+
+        .sidebar-content {
+            padding: 24px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        .resizer {
+            width: 4px;
+            cursor: col-resize;
+            background: transparent;
+            transition: background 0.3s;
+            height: 100%;
+        }
+        .resizer:hover { background: var(--accent-green); }
+
+        .new-chat-btn {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: white;
+            padding: 12px;
+            border-radius: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 500;
+            margin-bottom: 24px;
+            transition: all 0.3s ease;
+        }
+        .new-chat-btn:hover { background: var(--pak-green); border-color: var(--accent-green); }
+
+        .history-section { flex: 1; overflow-y: auto; }
+        .section-label { font-size: 11px; text-transform: uppercase; color: var(--text-dim); letter-spacing: 1px; margin-bottom: 12px; }
+
+        .history-item {
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 4px;
+            font-size: 14px;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid transparent;
+            animation: slideIn 0.3s ease forwards;
+        }
+        
+        @keyframes slideIn { from { opacity: 0; transform: translateX(-10px); } to { opacity: 1; transform: translateX(0); } }
+
+        /* --- Main Content --- */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background: radial-gradient(circle at 50% -20%, #1a302a 0%, #0b0f0e 60%);
+        }
+
+        .top-nav { 
+            height: 76px; 
+            padding: 0 40px; 
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid var(--border); 
+            flex-shrink: 0;
+            align-self: center;
+            color: #e5e921;
+        }
+        
+        .status { font-size: 14px; display: flex; align-items: center; gap: 10px; }
+
+        .chat-window { flex: 1; padding: 20px 40px; overflow-y: auto; display: flex; flex-direction: column; gap: 24px; }
+
+        /* UPDATED BUBBLE CLASS */
+        .bubble { 
+            padding: 14px 18px; 
+            border-radius: 17px; 
+            line-height: 1.4; 
+            font-size: 13px; 
+            max-width: 50%; 
+            /* Text Wrapping Fixes */
+            overflow-wrap: break-word;
+            word-wrap: break-word;
+            word-break: break-word;
+            white-space: pre-wrap; 
+        }
+
+        .bot-bubble { background: var(--sidebar-bg); border: 1px solid var(--border); align-self: flex-start;}
+        .user-bubble { background: var(--pak-green); color: white; align-self: flex-end; }
+        .message { display: flex; width: 100%; flex-direction: column; }
+
+        /* --- Input Section --- */
+        .input-container { 
+            padding: 10px 40px 30px; 
+            max-width: 900px; 
+            width: 100%; 
+            margin: 0 auto; 
+        }
+        
+        .interaction-area { display: flex; align-items: center; gap: 15px; }
+
+        .input-box {
+            flex: 1;
+            background: var(--sidebar-bg);
+            border: 1px solid var(--border);
+            padding: 14px 22px;
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: border-color 0.3s ease;
+        }
+
+        .input-box:focus-within { border-color: var(--accent-green); }
+        .input-box input { flex: 1; background: transparent; border: none; outline: none; color: white; font-size: 15px; }
+        
+        #sendBtn { 
+            background: var(--accent-green); 
+            border: none; 
+            width: 56px; 
+            height: 56px; 
+            border-radius: 50%;
+            cursor: pointer; 
+            display: flex;
+            flex-direction: column;
+            align-items: center; 
+            justify-content: center;
+            transition: transform 0.2s ease;
+            flex-shrink: 0;
+        }
+        
+        #sendBtn span { font-size: 9px; font-weight: 800; text-transform: uppercase; color: var(--bg-dark); }
+        #sendBtn i { color: var(--bg-dark); font-size: 18px; }
+        #sendBtn:hover { transform: scale(1.1); }
+
+        .chip { background: rgba(255,255,255,0.03); border: 1px solid var(--border); padding: 8px 16px; border-radius: 20px; font-size: 12px; color: var(--text-dim); cursor: pointer; margin: 0 5px; transition: 0.3s; }
+        .chip:hover { border-color: var(--accent-green); color: white; }
+        .suggestions { display: flex; justify-content: center; margin-bottom: 12px; }
+        .suggestions.hidden { display: none; }
+
+    </style>
+</head>
+<body>
+
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="logo-box">🇵🇰</div>
+            <h1>Pakistan AI<br><span style="color: var(--text-dim); font-weight: 300;">Policy 2026</span></h1>
+        </div>
+        
+        <div class="sidebar-content">
+            <button class="new-chat-btn" onclick="location.reload()">
+                <i class="ph ph-plus-bold"></i> New Chat
+            </button>
+            <div class="history-section" id="historySection">
+                <p class="section-label">History</p>
+                <p id="emptyHistory" style="font-size: 12px; color: var(--text-dim); opacity: 0.5;">No recent sessions</p>
+            </div>
+        </div>
+    </aside>
+
+    <div class="resizer" id="resizer"></div>
+
+    <main class="main-content">
+        <nav class="top-nav">
+            <div class="status">
+                <h2>Pakistan National AI Policy Assistant</h2>
+            </div>
+        </nav>
+
+        <div class="chat-window" id="chatWindow">
+            <div id="welcomeMsg" style="margin: auto; opacity: 0.3; text-align: center;">
+                <p>Asalam-U-Alekum. Please enter your query below.</p>
+            </div>
+        </div>
+
+        <div class="input-container">
+            <div class="suggestions" id="suggestionBox">
+                <div class="chip" onclick="setQuery('AI Policy Goals')">Policy Goals</div>
+                <div class="chip" onclick="setQuery('Summarize National AI Policy')">Summarize AI Policy</div>
+                <div class="chip" onclick="setQuery('Digital Infrastructure')">Infrastructure</div>
+            </div>
+
+            <div class="interaction-area">
+                <div class="input-box">
+                    <i class="ph ph-magnifying-glass" style="color: var(--text-dim); font-size: 18px;"></i>
+                    <input type="text" id="userInput" placeholder="Type here...">
+                </div>
+                <button id="sendBtn">
+                    <i class="ph ph-paper-plane-right-fill"></i>
+                    <span>Send</span>
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Sidebar Resizing Logic
+        const sidebar = document.getElementById('sidebar');
+        const resizer = document.getElementById('resizer');
+        let isResizing = false;
+
+        resizer.addEventListener('mousedown', () => isResizing = true);
+        document.addEventListener('mousemove', (e) => {
+            if (!isResizing) return;
+            if (e.clientX > 200 && e.clientX < 500) sidebar.style.width = e.clientX + 'px';
+        });
+        document.addEventListener('mouseup', () => isResizing = false);
+
+        // Chat Logic
+        const chatWindow = document.getElementById('chatWindow');
+        const userInput = document.getElementById('userInput');
+        const sendBtn = document.getElementById('sendBtn');
+        const suggestionBox = document.getElementById('suggestionBox');
+        const historySection = document.getElementById('historySection');
+        const emptyHistory = document.getElementById('emptyHistory');
+
+        let isFirst = true;
+
+        function updateHistory(text) {
+            if (emptyHistory) emptyHistory.remove();
+            const item = document.createElement('div');
+            item.className = 'history-item';
+            const displaySafeText = text.length > 20 ? text.substring(0, 20) + "..." : text;
+            item.innerHTML = `<i class="ph ph-chat-circle-dots"></i> <span>${displaySafeText}</span>`;
+            historySection.appendChild(item);
+        }
+
+        function appendMessage(text, type) {
+            if (isFirst) {
+                chatWindow.innerHTML = '';
+                suggestionBox.classList.add('hidden');
+                updateHistory(text); 
+                isFirst = false;
+            }
+            const msgContainer = document.createElement('div');
+            msgContainer.className = 'message';
+            
+            const bubble = document.createElement('div');
+            bubble.className = `bubble ${type === 'user' ? 'user-bubble' : 'bot-bubble'}`;
+            bubble.innerText = text;
+            
+            msgContainer.appendChild(bubble);
+            chatWindow.appendChild(msgContainer);
+            chatWindow.scrollTop = chatWindow.scrollHeight;
+        }
+
+        function handleSend() {
+            const val = userInput.value.trim();
+            if (val) {
+                appendMessage(val, 'user');
+                userInput.value = '';
+                fetch('http://127.0.0.1:8000/ask/?question=${encodeURIComponent(val)', 
+                    {method: "POST"})
+                .then(res => res.json())
+                .then(data => {
+                    appendMessage(data.answer, 'bot');
+                })
+                .catch(err => {
+                    appendMessage("❌ Error connecting to server", 'bot');
+                    console.error(err);
+                });
+            }
+        }
+
+        function setQuery(q) { userInput.value = q; handleSend(); }
+        sendBtn.addEventListener('click', handleSend);
+        userInput.addEventListener('keypress', (e) => { if(e.key === 'Enter') handleSend(); });
+    </script>
+</body>
+</html>
